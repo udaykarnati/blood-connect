@@ -1,0 +1,13 @@
+# Frontend / React
+frontend/node_modules/
+frontend/build/
+frontend/.env
+
+# Backend / Spring Boot / IntelliJ
+backend/.idea/
+backend/target/
+backend/*.iml
+backend/*.log
+
+# General
+.DS_Store
