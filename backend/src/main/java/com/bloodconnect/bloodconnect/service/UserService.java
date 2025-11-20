@@ -8,4 +8,7 @@ public interface UserService {
     User getUserByEmail(String email);
     List<User> getUsersByBloodGroup(String bloodGroup);
     List<User> getAllUsers();
+
+    // 🔥 NEW: required for distance-based donor mapping
+    User getUserById(Long id);
 }

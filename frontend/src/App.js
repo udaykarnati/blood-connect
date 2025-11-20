@@ -7,7 +7,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import RequestBlood from "./pages/RequestBlood"; // Request creation page
+import RequestBlood from "./pages/RequestBlood";
+import DonorSearch from "./pages/DonorSearch";
+import BrowseRequests from "./pages/BrowseRequests"; // 🔹 NEW
 
 // Styled Landing page for BloodConnect
 const Landing = () => (
@@ -26,8 +28,16 @@ const Landing = () => (
     <h1 style={{ color: "#E53935", fontSize: "3rem", marginBottom: "20px" }}>
       Welcome to BloodConnect
     </h1>
-    <p style={{ color: "#333", fontSize: "1.2rem", maxWidth: "600px", marginBottom: "30px" }}>
-      Your platform for requesting and donating blood efficiently. Connect with donors instantly and save lives.
+    <p
+      style={{
+        color: "#333",
+        fontSize: "1.2rem",
+        maxWidth: "600px",
+        marginBottom: "30px",
+      }}
+    >
+      Your platform for requesting and donating blood efficiently. Connect with
+      donors instantly and save lives.
     </p>
     <div>
       <a
@@ -54,9 +64,24 @@ const Landing = () => (
           textDecoration: "none",
           fontWeight: "bold",
           border: "2px solid #E53935",
+          marginRight: "10px",
         }}
       >
         View Dashboard
+      </a>
+      <a
+        href="/finddonors"
+        style={{
+          backgroundColor: "#fff",
+          color: "#E53935",
+          padding: "12px 25px",
+          borderRadius: "8px",
+          textDecoration: "none",
+          fontWeight: "bold",
+          border: "2px solid #E53935",
+        }}
+      >
+        Find Donors
       </a>
     </div>
   </div>
@@ -86,6 +111,22 @@ function App() {
           element={
             <ProtectedRoute>
               <RequestBlood />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/finddonors"
+          element={
+            <ProtectedRoute>
+              <DonorSearch />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/browserequests"
+          element={
+            <ProtectedRoute>
+              <BrowseRequests />
             </ProtectedRoute>
           }
         />

@@ -8,7 +8,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchRequests = async () => {
-      if (!user) return;
+      if (!user || !user.email) {
+        setLoading(false);
+        return;
+      }
 
       try {
         // Fetch requests created by the logged-in user's email
@@ -22,10 +25,22 @@ const Dashboard = () => {
     };
 
     fetchRequests();
-  }, [user.email]);
+  }, [user?.email]);
+
+  if (!user) {
+    return (
+      <p style={{ textAlign: "center", marginTop: "20px" }}>
+        Please log in to view your requests.
+      </p>
+    );
+  }
 
   if (loading) {
-    return <p style={{ textAlign: "center", marginTop: "20px" }}>Loading your requests...</p>;
+    return (
+      <p style={{ textAlign: "center", marginTop: "20px" }}>
+        Loading your requests...
+      </p>
+    );
   }
 
   return (
@@ -36,12 +51,20 @@ const Dashboard = () => {
         minHeight: "80vh",
       }}
     >
-      <h2 style={{ textAlign: "center", color: "#E53935", marginBottom: "20px" }}>
+      <h2
+        style={{
+          textAlign: "center",
+          color: "#E53935",
+          marginBottom: "20px",
+        }}
+      >
         Your Blood Requests
       </h2>
 
       {requests.length === 0 ? (
-        <p style={{ textAlign: "center" }}>You have not created any requests yet.</p>
+        <p style={{ textAlign: "center" }}>
+          You have not created any requests yet.
+        </p>
       ) : (
         requests.map((req) => (
           <div
@@ -54,18 +77,69 @@ const Dashboard = () => {
               marginBottom: "15px",
             }}
           >
-            <p><strong>Recipient Name:</strong> {req.recipientName}</p>
-            <p><strong>Recipient Phone:</strong> {req.recipientPhone}</p>
-
-            <p><strong>Guardian Name:</strong> {req.creatorName}</p>
-            <p><strong>Contact:</strong> {req.creatorPhone}</p>
-
-            <p><strong>Blood Group:</strong> {req.bloodGroup}</p>
-            <p><strong>Quantity:</strong> {req.quantity}</p>
-
-            <p style={{ color: "#d32f2f", fontWeight: "bold" }}>
-              Status: Request created successfully. Alerts sent to matching donors!
+            <p>
+              <strong>Recipient Name:</strong> {req.recipientName}
             </p>
+            <p>
+              <strong>Recipient Phone:</strong> {req.recipientPhone}
+            </p>
+
+            <p>
+              <strong>Guardian Name:</strong> {req.creatorName}
+            </p>
+            <p>
+              <strong>Contact:</strong> {req.creatorPhone}
+            </p>
+
+            <p>
+              <strong>Blood Group:</strong> {req.bloodGroup}
+            </p>
+            <p>
+              <strong>Quantity:</strong> {req.quantity}
+            </p>
+
+            {/* 🔹 Status display */}
+            <p
+              style={{
+                color:
+                  req.status === "ACCEPTED"
+                    ? "green"
+                    : req.status === "PENDING"
+                    ? "#d32f2f"
+                    : "#555",
+                fontWeight: "bold",
+              }}
+            >
+              Status:{" "}
+              {req.status === "ACCEPTED"
+                ? "Donor found 🎉"
+                : req.status === "PENDING"
+                ? "Waiting for donors to respond..."
+                : req.status || "Unknown"}
+            </p>
+
+            {/* 🔹 If donor accepted, show donor info */}
+            {req.status === "ACCEPTED" && (
+              <div
+                style={{
+                  marginTop: "10px",
+                  padding: "10px",
+                  borderRadius: "6px",
+                  backgroundColor: "#e8f5e9",
+                  border: "1px solid #a5d6a7",
+                }}
+              >
+                <p style={{ margin: 0, fontWeight: "bold" }}>
+                  Donor Details:
+                </p>
+                <p style={{ margin: "4px 0" }}>
+                  <strong>Name:</strong> {req.acceptedDonorName}
+                </p>
+                <p style={{ margin: "4px 0" }}>
+                  <strong>Phone:</strong> {req.acceptedDonorPhone}
+                </p>
+              </div>
+            )}
           </div>
         ))
       )}

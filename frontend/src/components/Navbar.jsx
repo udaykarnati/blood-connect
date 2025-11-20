@@ -20,7 +20,7 @@ const Navbar = () => {
         justifyContent: "space-between",
         alignItems: "center",
         padding: "12px 25px",
-        backgroundColor: "#E53935", // Primary red theme
+        backgroundColor: "#E53935",
         color: "#fff",
         position: "relative",
       }}
@@ -61,12 +61,27 @@ const Navbar = () => {
             >
               Dashboard
             </Link>
+
             <Link
               to="/requestblood"
               style={{ marginRight: "10px", color: "#fff", fontWeight: "bold" }}
             >
               Create Request
             </Link>
+
+            {/* 🔹 Only show for donors */}
+            {user?.isDonor && (
+              <Link
+                to="/browserequests"
+                style={{
+                  marginRight: "10px",
+                  color: "#fff",
+                  fontWeight: "bold",
+                }}
+              >
+                Browse Requests
+              </Link>
+            )}
 
             <button
               onClick={() => setShowProfile(!showProfile)}
