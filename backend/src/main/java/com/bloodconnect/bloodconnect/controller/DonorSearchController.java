@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users/donors")
-@CrossOrigin(origins = "http://localhost:3000") // adjust if needed
+@CrossOrigin(origins = "http://localhost:3000") 
 public class DonorSearchController {
 
     private final DonorSearchService donorSearchService;
@@ -18,13 +18,13 @@ public class DonorSearchController {
         this.donorSearchService = donorSearchService;
     }
 
-    // 🔹 City-based search
+ 
     @GetMapping("/search/city")
     public List<User> searchByCity(@RequestParam String city) {
         return donorSearchService.searchDonorsByCity(city);
     }
 
-    // 🔹 Distance-based search
+    
     @GetMapping("/search/nearby")
     public List<DonorDistanceDto> searchNearby(
             @RequestParam double lat,
