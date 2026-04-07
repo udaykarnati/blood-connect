@@ -5,7 +5,7 @@ const Dashboard = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const user = JSON.parse(localStorage.getItem("user"));
-
+//eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const fetchRequests = async () => {
       if (!user || !user.email) {
