@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/requests")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://blood-connect-6ami.vercel.app"})
 public class BloodRequestController {
 
     private final BloodRequestService bloodRequestService;

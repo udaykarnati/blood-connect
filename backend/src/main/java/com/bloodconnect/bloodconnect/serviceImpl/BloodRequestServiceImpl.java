@@ -113,24 +113,29 @@ public class BloodRequestServiceImpl implements BloodRequestService {
 
         // 🔹 6) Send email notifications to matched donors
         for (User donor : matchedDonors) {
-            emailService.sendEmail(
-                    donor.getEmail(),
-                    "Urgent Blood Request - " + request.getBloodGroup(),
-                    "Dear " + donor.getName() + ",\n\n" +
-                            "An urgent request for blood group " + request.getBloodGroup() + " has been made.\n\n" +
+            try {
+                emailService.sendEmail(
+                        donor.getEmail(),
+                        "Urgent Blood Request - " + request.getBloodGroup(),
+                        "Dear " + donor.getName() + ",\n\n" +
+                                "An urgent request for blood group " + request.getBloodGroup() + " has been made.\n\n" +
 
-                            "📌 Recipient Details:\n" +
-                            "   Name: " + request.getRecipientName() + "\n" +
-                            "   Phone: " + request.getRecipientPhone() + "\n\n" +
+                                "📌 Recipient Details:\n" +
+                                "   Name: " + request.getRecipientName() + "\n" +
+                                "   Phone: " + request.getRecipientPhone() + "\n\n" +
 
-                            "📌 Guardian Details:\n" +
-                            "   Name: " + request.getCreatorName() + "\n" +
-                            "   Contact: " + request.getCreatorPhone() + "\n\n" +
+                                "📌 Guardian Details:\n" +
+                                "   Name: " + request.getCreatorName() + "\n" +
+                                "   Contact: " + request.getCreatorPhone() + "\n\n" +
 
-                            "👉 Please reach out to the guardian to coordinate.\n\n" +
-                            "Thank you for being a lifesaver!\n" +
-                            "BloodConnect"
-            );
+                                "👉 Please reach out to the guardian to coordinate.\n\n" +
+                                "Thank you for being a lifesaver!\n" +
+                                "BloodConnect"
+                );
+            } catch (Exception e) {
+                System.err.println("Failed to send email to " + donor.getEmail() + ": " + e.getMessage());
+                // Continue with other emails
+            }
         }
 
         return savedRequest;
@@ -168,19 +173,23 @@ public class BloodRequestServiceImpl implements BloodRequestService {
 
         // 4) Notify creator that a donor accepted the request
         if (request.getCreatorEmail() != null) {
-            emailService.sendEmail(
-                    request.getCreatorEmail(),
-                    "Good news! A donor has accepted your blood request",
-                    "Dear " + request.getCreatorName() + ",\n\n" +
-                            "A donor has accepted your blood request for blood group " + request.getBloodGroup() + ".\n\n" +
-                            "Donor Details:\n" +
-                            "   Name: " + donor.getName() + "\n" +
-                            "   Phone: " + donor.getPhone() + "\n" +
-                            "   Email: " + donor.getEmail() + "\n\n" +
-                            "Please contact the donor to coordinate the donation.\n\n" +
-                            "Regards,\n" +
-                            "BloodConnect"
-            );
+            try {
+                emailService.sendEmail(
+                        request.getCreatorEmail(),
+                        "Good news! A donor has accepted your blood request",
+                        "Dear " + request.getCreatorName() + ",\n\n" +
+                                "A donor has accepted your blood request for blood group " + request.getBloodGroup() + ".\n\n" +
+                                "Donor Details:\n" +
+                                "   Name: " + donor.getName() + "\n" +
+                                "   Phone: " + donor.getPhone() + "\n" +
+                                "   Email: " + donor.getEmail() + "\n\n" +
+                                "Please contact the donor to coordinate the donation.\n\n" +
+                                "Regards,\n" +
+                                "BloodConnect"
+                );
+            } catch (Exception e) {
+                System.err.println("Failed to send email to creator " + request.getCreatorEmail() + ": " + e.getMessage());
+            }
         }
 
         return updated;

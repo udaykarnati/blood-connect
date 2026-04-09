@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users/donors")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://blood-connect-6ami.vercel.app"})
 public class DonorSearchController {
 
     private final DonorSearchService donorSearchService;
