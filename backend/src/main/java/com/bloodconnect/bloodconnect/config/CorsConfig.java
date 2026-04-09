@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000", "https://blood-connect-a3qm.vercel.app") // React app (local & production)
+                        .allowedOrigins("http://localhost:3000", "https://blood-connect-6ami.vercel.app") // React app (local & production)
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
