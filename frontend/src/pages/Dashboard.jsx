@@ -24,7 +24,7 @@ const Dashboard = () => {
     };
 
     fetchRequests();
-  }, [user?.email]);
+  }, [user]);
 
   if (!user) {
     return (

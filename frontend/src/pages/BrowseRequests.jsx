@@ -35,7 +35,7 @@ const BrowseRequests = () => {
     };
 
     fetchRequests();
-  }, [user?.email]);
+  }, [user]);
 
   if (!user) {
     return (
