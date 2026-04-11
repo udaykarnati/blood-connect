@@ -26,7 +26,7 @@ public class EmailServiceImpl implements EmailService {
 
             Email from = new Email("karnatiudayreddy@gmail.com", "BloodConnect");
 
-            Content content = new Content("text/html", body);
+            Content content = new Content("text/plain", body);
 
             Mail mail = new Mail();
             mail.setFrom(from);
